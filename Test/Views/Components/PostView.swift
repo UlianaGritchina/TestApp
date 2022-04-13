@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct PostView: View {
+    @State private var profileImage = Image(uiImage: UIImage(data: DataManager.shared.getProfileImageData()) ?? UIImage(named: "startProfilPhoto")!)
+    @State private var coverImage = Image(uiImage: UIImage(data: DataManager.shared.getCoverImageData()) ?? UIImage(named: "startCoverPhoto")!)
     var body: some View {
         VStack {
             HStack {
-                Image("startProfilPhoto")
+                profileImage
                     .resizable()
                     .scaledToFill()
                     .frame(width: 40, height: 40)
@@ -24,11 +26,16 @@ struct PostView: View {
                 .font(.system(size: 14))
                 .padding(.horizontal)
             
-            Image("startProfilPhoto")
+            coverImage
                 .resizable()
                 .scaledToFill()
                 .frame(width: 375, height: 275)
         }.padding(.bottom, 76)
+        
+            .onAppear {
+                 profileImage = Image(uiImage: UIImage(data: DataManager.shared.getProfileImageData()) ?? UIImage(named: "startProfilPhoto")!)
+                 coverImage = Image(uiImage: UIImage(data: DataManager.shared.getCoverImageData()) ?? UIImage(named: "startCoverPhoto")!)
+            }
     }
 }
 

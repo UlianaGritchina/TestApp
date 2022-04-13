@@ -7,11 +7,14 @@
 
 import SwiftUI
 
+
+
 struct HomeView: View {
+    @StateObject var vm = HomeViewViewModel()
     var body: some View {
         ScrollView {
             VStack {
-                Image(uiImage: UIImage(named: "startCoverPhoto")!)
+                Image(uiImage: UIImage(data: vm.coverImageData) ?? UIImage(named: "startCoverPhoto")!)
                     .resizable()
                     .frame(width: 345, height: 195)
                     .cornerRadius(20)
@@ -19,7 +22,7 @@ struct HomeView: View {
                         Circle()
                             .frame(width: 200, height: 200)
                             .foregroundColor(.white)
-                        Image("startProfilPhoto")
+                        Image(uiImage: UIImage(data: vm.profileImageData) ?? UIImage(named: "startProfilPhoto")!)
                             .resizable()
                             .scaledToFill()
                             .frame(width: 172, height: 172)
@@ -32,7 +35,7 @@ struct HomeView: View {
                     .frame(width: 145, height: 33)
                     .padding(.top, 109)
                 
-                Text("This is bio")
+                Text(vm.bio)
                     .font(.system(size: 16))
                     .frame(width: 145, height: 33)
                 
@@ -51,6 +54,7 @@ struct HomeView: View {
                 PostView()
             }
         }
+        .onAppear { vm.updateData() }
     }
 }
 
